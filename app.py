@@ -1,5 +1,7 @@
 from flask import Flask, request, jsonify, render_template, redirect, url_for, session
 
+import CustomMethodsVI.Connection as Connection
+
 app = Flask(__name__)
 
 @app.route("/")
