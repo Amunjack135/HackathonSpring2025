@@ -9,10 +9,12 @@ import EmployeeProfile
 import EmployeeAssessment
 import CompanyRole
 import Resume
+import gpt
 
+GPTAPI: gpt.MyGPTAPI = gpt.MyGPTAPI()
 app: flask.Flask = flask.Flask(__name__, static_folder='static', template_folder='templates')
 socketio: Connection.FlaskSocketioServer = Connection.FlaskSocketioServer(app)
-SocketHandler.init(socketio)
+SocketHandler.init(socketio, GPTAPI)
 EmployeeProfile.MyEmployeeProfile.load('data/employee_profiles')
 EmployeeAssessment.MyEmployeeAssessment.load('data/employee_assessments')
 CompanyRole.MyCompanyRole.load('data/company_roles')

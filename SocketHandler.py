@@ -7,9 +7,10 @@ import CustomMethodsVI.Connection as Connection
 import EmployeeProfile
 import CompanyRole
 import Resume
+import gpt
 
 
-def init(socketio: Connection.FlaskSocketioServer) -> None:
+def init(socketio: Connection.FlaskSocketioServer, gpt_api: gpt.MyGPTAPI) -> None:
     common: Connection.FlaskSocketioNamespace = socketio.of('/common')
 
     @common.on('connect')
