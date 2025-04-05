@@ -54,3 +54,8 @@ body{
 .shadow-none {
     box-shadow: none!important;
 }
+
+.custom-card-width {
+    width: 53vw;
+  margin: 0;
+}
