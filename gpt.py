@@ -21,7 +21,7 @@ def skills(text):
 
         Given the following resume or employee data, do the following:
 
-        1. Extract **exactly 8** key skills (both technical and soft skills, certifications, or tools).
+        1. Extract **exactly 8** key skills (technical , certifications, or tools).
 
         Chevron Roles:
         - Cloud Engineer
@@ -48,7 +48,51 @@ def skills(text):
         input=text,
     )
 
-    return response.output_text
+    return response.output_text.split(",")
+
+def companySkills():
+    response = client.responses.create(
+        model="gpt-4o",
+        instructions=
+        """
+        You are building an AI-powered system for Chevron to assess employee capabilities and match them to the most suitable internal roles.
+
+        The system will:
+        - Analyze employee data such as performance reviews, project outcomes, self-assessments, and peer feedback.
+        - Extract relevant technical and soft skills.
+        - Compare these skills with Chevron's available roles to determine the best match.
+
+        Given the following resume or employee data, do the following:
+
+        1. Extract **exactly 8** key skills (technical , certifications, or tools).
+
+        Chevron Roles:
+        - Cloud Engineer
+        - Network Engineer
+        - Infrastructure Engineer
+        - Data Engineer
+        - Data Analyst
+        - Data Scientist
+        - Machine Learning Engineer
+        - Business Intelligence Analyst
+        - Cyber Engineer - Information Technology (IT)
+        - Cyber Engineer - Operational Technology (OT)
+        - Software Engineer
+        - Application Engineer
+
+        **Return your answer in this format:**
+
+        Comma-separated list of 8 relevant skills
+
+        Employee Data:
+        {text}
+        """
+        ,
+        input=text,
+    )
+
+    return response.output_text.split(",")
+
 
 def read_file(file):
     with open(file, 'r') as f:

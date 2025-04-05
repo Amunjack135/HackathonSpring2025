@@ -54,4 +54,4 @@ Texas A&M University — Class of 2019
 Projects
 Real-Time Cyber Threat Detection System – Developed a Python-based tool to detect anomalies across network traffic.
 
-DataOps Dashboard – Designed a BI tool in Tableau integrated with live data streams from Kafka.
+DataOps Dashboard – Designed a BI tool in Tableau integrated with live data streams from Kafka. a
