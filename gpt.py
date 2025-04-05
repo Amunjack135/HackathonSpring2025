@@ -145,7 +145,7 @@ class MyGPTAPI:
             normalized_role_optional_skills = {k.strip().lower(): v for k, v in role.optional_skills.items()}       # Get optional skills as listed in company role files
             normalized_role_extra_skills = {k.strip().lower(): v for k, v in extra_skills[uid].items()}  # Get extra skills as listed from AI
 
-            for skill in normalized_role_required_skills:
+            for skill in normalized_employee_skills:
                 matched_score = 0
                 # Exact match
                 if skill in normalized_role_required_skills:
