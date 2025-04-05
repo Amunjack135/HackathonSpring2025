@@ -1,4 +1,5 @@
 import cv2
+import datetime
 import numpy
 import PIL.Image
 import tkinter.filedialog as fd
@@ -17,15 +18,23 @@ def main():
     roles: tuple[str, ...] = tuple(role.strip().lower() for role in input('Employee Roles: (comma separated) ').split(',') if len(role) > 0)
     resume: str = input('Employee Resume ID: (int,int,int) ')
     resume_index: tuple[int, ...] = tuple() if len(resume) == 0 else tuple(int(rid) for rid in resume.split(','))
+    date: str = input('Start Date: (DD/MM/YYYY-HH:MM:SS)')
+    start_date: datetime.datetime = datetime.datetime.fromtimestamp(0, datetime.timezone.utc) if len(date) == 0 else datetime.datetime.strptime(date, '%d/%m/%Y-%H:%M:%S').astimezone(datetime.timezone.utc)
     bio: str = input('Employee Bio: ')
-    image_file: str = fd.askopenfilename(defaultextension='png', filetypes=(('Images', ('.png', '.jpg', '.jpeg')),))
+    image_file: str = fd.askopenfilename(defaultextension='png', filetypes=(('All Files', ('*',)),))
 
     if image_file is None:
         return
 
     pillow: PIL.Image.Image = PIL.Image.open(image_file).convert('RGBA')
     image: numpy.ndarray = numpy.array(pillow)
-    image = cv2.resize(image, (512, 512))
+    height: int
+    width: int
+    height, width = image.shape[:2]
+    aspect_ratio: float = width / height
+    new_height: int = 512
+    new_width: int = round(new_height * aspect_ratio)
+    image = cv2.resize(image, (new_width, new_height), interpolation=cv2.INTER_AREA)
 
     mapping: dict = {
         'EmployeeProfile': {
@@ -36,9 +45,12 @@ def main():
             'AssessmentIDs': assessments,
             'CurrentRole': roles,
             'ResumeID': resume_index[:3],
-            'Image': [zlib.compress(image.tobytes(), zlib.Z_BEST_COMPRESSION)],
+            'StartDate': start_date.timestamp(),
+            'ImageSize': [new_height, new_width],
+            'Image': [zlib.compress(cv2.cvtColor(image, cv2.COLOR_BGRA2RGBA).tobytes(), zlib.Z_BEST_COMPRESSION)],
             'Extra': [],
-            'Bio': [zlib.compress(bio.encode())]
+            'Bio': [zlib.compress(bio.encode())],
+            'DigitalPortfolio': {}
         }
     }
 
