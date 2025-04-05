@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import datetime
 import numpy
 import typing
 import pickle
@@ -109,9 +110,11 @@ class MyEmployeeProfile:
             self.__resume_batch_id__: slice = slice(-1, -1)
             self.__resume_file_id__: int = -1
 
+        self.__start_date__: datetime.datetime = datetime.datetime.fromtimestamp(0 if len(kvp.EmployeeProfile.StartDate) == 0 else float(kvp.EmployeeProfile.StartDate[0]), datetime.timezone.utc)
         self.__image__: numpy.ndarray = numpy.full((512, 512, 4), 0, numpy.uint8) if len(kvp.EmployeeProfile.Image) == 0 else numpy.reshape(numpy.frombuffer(zlib.decompress(kvp.EmployeeProfile.Image[0]), dtype=numpy.uint8), (512, 512, 4))
         self.__extra_meta__: typing.Any = None if len(kvp.EmployeeProfile.Extra) == 0 else pickle.loads(kvp.EmployeeProfile.Extra[0])
         self.__bio__: str = '' if len(kvp.EmployeeProfile.Bio) == 0 else zlib.decompress(kvp.EmployeeProfile.Bio[0]).decode()
+        self.__digital_portfolio__: dict[str, str] = {str(website): str(url) for website, url in kvp.EmployeeProfile.DigitalPortfolio}
 
     def to_kvp(self) -> KVP.KVP:
         """
@@ -128,9 +131,11 @@ class MyEmployeeProfile:
                 'AssessmentIDs': self.__assessment_ids,
                 'CurrentRole': self.__roles__,
                 'ResumeID': [] if self.resume is None else [self.__resume_batch_id__.start, self.__resume_batch_id__.stop, self.__resume_file_id__],
+                'StartDate': [self.__start_date__.timestamp()],
                 'Image': [zlib.compress(self.__image__.tobytes(), zlib.Z_BEST_COMPRESSION)],
                 'Extra': [] if self.__extra_meta__ is None else [pickle.dumps(self.__extra_meta__)],
-                'Bio': [zlib.compress(self.__bio__.encode())]
+                'Bio': [zlib.compress(self.__bio__.encode())],
+                'DigitalPortfolio': {website: [url] for website, url in self.__digital_portfolio__.items()}
             }
         }
         return KVP.KVP(None, mapping)

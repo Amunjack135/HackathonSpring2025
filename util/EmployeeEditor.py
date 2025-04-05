@@ -1,4 +1,5 @@
 import cv2
+import datetime
 import numpy
 import PIL.Image
 import tkinter.filedialog as fd
@@ -17,6 +18,7 @@ def main():
     roles: tuple[str, ...] = tuple(role.strip().lower() for role in input('Employee Roles: (comma separated) ').split(',') if len(role) > 0)
     resume: str = input('Employee Resume ID: (int,int,int) ')
     resume_index: tuple[int, ...] = tuple() if len(resume) == 0 else tuple(int(rid) for rid in resume.split(','))
+    start_date: datetime.datetime = datetime.datetime.strptime(input('Start Date: (DD/MM/YYYY-HH:MM:SS)'), '%d/%m/%Y-%H:%M:%S').astimezone(datetime.timezone.utc)
     bio: str = input('Employee Bio: ')
     image_file: str = fd.askopenfilename(defaultextension='png', filetypes=(('Images', ('.png', '.jpg', '.jpeg')),))
 
@@ -36,9 +38,11 @@ def main():
             'AssessmentIDs': assessments,
             'CurrentRole': roles,
             'ResumeID': resume_index[:3],
+            'StartDate': start_date.timestamp(),
             'Image': [zlib.compress(image.tobytes(), zlib.Z_BEST_COMPRESSION)],
             'Extra': [],
-            'Bio': [zlib.compress(bio.encode())]
+            'Bio': [zlib.compress(bio.encode())],
+            'DigitalPortfolio': {}
         }
     }
 
