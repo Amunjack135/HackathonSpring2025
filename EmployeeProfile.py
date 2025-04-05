@@ -109,7 +109,7 @@ class MyEmployeeProfile:
             self.__resume_batch_id__: slice = slice(-1, -1)
             self.__resume_file_id__: int = -1
 
-        self.__image__: numpy.ndarray = numpy.full((512, 512, 4), 0, numpy.uint8) if len(kvp.EmployeeProfile.Image) == 0 else numpy.frombuffer(zlib.decompress(kvp.EmployeeProfile.Image[0]), dtype=numpy.uint8)
+        self.__image__: numpy.ndarray = numpy.full((512, 512, 4), 0, numpy.uint8) if len(kvp.EmployeeProfile.Image) == 0 else numpy.reshape(numpy.frombuffer(zlib.decompress(kvp.EmployeeProfile.Image[0]), dtype=numpy.uint8), (512, 512, 4))
         self.__extra_meta__: typing.Any = None if len(kvp.EmployeeProfile.Extra) == 0 else pickle.loads(kvp.EmployeeProfile.Extra[0])
         self.__bio__: str = '' if len(kvp.EmployeeProfile.Bio) == 0 else zlib.decompress(kvp.EmployeeProfile.Bio[0]).decode()
 

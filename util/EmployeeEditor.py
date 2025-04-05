@@ -1,5 +1,6 @@
 import cv2
 import numpy
+import PIL.Image
 import tkinter.filedialog as fd
 import zlib
 
@@ -22,7 +23,8 @@ def main():
     if image_file is None:
         return
 
-    image: numpy.ndarray = cv2.imread(image_file, cv2.IMREAD_COLOR | cv2.IMREAD_ANYCOLOR | cv2.IMREAD_ANYDEPTH)
+    pillow: PIL.Image.Image = PIL.Image.open(image_file).convert('RGBA')
+    image: numpy.ndarray = numpy.array(pillow)
     image = cv2.resize(image, (512, 512))
 
     mapping: dict = {
