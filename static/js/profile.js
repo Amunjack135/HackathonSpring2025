@@ -13,16 +13,26 @@
         let phone1 = data[user_uid]['Phone'][0];
         let phone2 = (data[user_uid]['Phone'].length > 1) ? data[user_uid]['Phone'][1] : '###-###-####';
         let role = data[user_uid]['CurrentRole'][0];
-        let hired = new Date(data[user_uid]['StartDate'])
+        let hired = new Date(data[user_uid]['StartDate']);
+        let roles = [];
+
+        for (let index in data[user_uid]['CurrentRole'])
+        {
+            if (index === '0') continue;
+            else if (index > 3) break;
+            roles.push(data[user_uid]['CurrentRole'][index]);
+        }
 
         document.getElementById('user-icon').src = `data:image/jpg;base64,${btoa(String.fromCharCode(...new Uint8Array(image)))}`;
         document.getElementById('user-name').innerText = data[user_uid]['Name'][0];
-        document.getElementById('user-roles').innerText = `Role: ${(role === undefined) ? 'N/A' : role}`;
+        document.getElementById('user-role').innerText = (role === undefined) ? 'N/A' : role;
+        document.getElementById('user-roles').innerText = `Previous Roles: ${(roles.length === 0) ? 'N/A' : roles.join('; ')}`;
         //document.getElementById('full-name').innerText = data[user_uid]['Name'][0];
         //document.getElementById('user-email').innerText = data[user_uid]['Email'][0];
         //document.getElementById('phone1').innerText = phone1;
         //document.getElementById('phone2').innerText = phone2;
         document.getElementById('time-since').innerText = `Since: ${hired.toDateString()}`;
+        document.getElementById('uid').innerText = String(user_uid).padStart(8, '0');
 
         let links = ['website', 'github', 'twitter', 'instagram', 'facebook']
         let portfolio = data[user_uid]['DigitalPortfolio'];
@@ -128,7 +138,8 @@
             });
         }
 
-            dialog.showModal();
+        dialog.showModal();
+        dialog.firstChild.scrollTop = 0;
     });
 
     window.addEventListener('load', (event) => {
