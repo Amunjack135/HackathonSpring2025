@@ -21,6 +21,10 @@ Resume.MyResume.load('data/resumes')
 def index():
     return flask.render_template('index.html')
 
+@app.route('/ncathack/employeeskills')
+def employee():
+    return flask.render_template('employeeskils.html')
+
 
 def socketio_main():
     try:

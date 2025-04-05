@@ -238,13 +238,15 @@ button:hover
 
 .avatar-container img
 {
-    width: 115px;
-    height: 125px;
+    width: 130px;
+    height: 130px;
     border-radius: 80%;
     overflow:visible;
     display: grid;
     padding-left: 25px;
+    padding-right: 25px;
     padding-top: 20px;
+    padding-bottom: 20px;
 
 
 }
@@ -253,12 +255,13 @@ button:hover
     padding-top: 5px;
     padding-left: 30px;
     position: absolute;
+    color:black;
 }
 
 #chevlogo img{
     width: 55px;
     height: 55px;
-    padding-left: 5px;
+    padding-left: 7px;
 }
 #avatar
 {
