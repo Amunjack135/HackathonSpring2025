@@ -9,9 +9,11 @@
             let preview = previews[uid];
             let container = document.createElement('div');
             let image = document.createElement('img');
-            let name = document.createElement('span');
+            let name = document.createElement('p');
+            let bold = document.createElement('b')
             image.src = `data:image/jpg;base64,${btoa(String.fromCharCode(...new Uint8Array(preview['image'])))}`;
-            name.innerText = preview['name'];
+            bold.innerText = preview['name'];
+            name.appendChild(bold)
             container.appendChild(image);
             container.appendChild(name);
             root.appendChild(container);

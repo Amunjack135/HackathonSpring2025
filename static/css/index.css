@@ -151,10 +151,11 @@ button:hover
     padding: 0;
 }
 
-#avatar-container span
+#avatar-container p
 {
     color:black;
     font-size: 1rem;
+    margin: 0.25vh auto;
 }
 
 #chevlogo img{
