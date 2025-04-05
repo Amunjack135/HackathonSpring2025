@@ -144,8 +144,8 @@ button:hover
 
 #avatar-container img
 {
-    max-width: 15vw;
-    height: 15vh;
+    max-width: 10vw;
+    height: 10vh;
     border: 0.125rem solid black;
     overflow: hidden;
     padding: 0;
@@ -159,8 +159,8 @@ button:hover
 }
 
 #chevlogo img{
-    width: 55px;
-    height: 55px;
+    width:5vh;
+    height: 5vh;
     padding-left: 7px;
 }
 
@@ -168,11 +168,14 @@ button:hover
     display: flex;
     align-items: center; /* vertically center text with image */
     gap: 10px; /* spacing between image and text */
+    padding: 0.5vh 0;
+    position: relative;
+    left: 10vw;
 }
 
 
 #chevlogo b{
-    font-size: 45px;
+    font-size: 2rem;
     font-family: "Times New Roman", Times, serif;
     color: black
 }
