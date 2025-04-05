@@ -162,3 +162,23 @@ button:hover
     height: 55px;
     padding-left: 7px;
 }
+
+#chevlogo{
+    display: flex;
+    align-items: center; /* vertically center text with image */
+    gap: 10px; /* spacing between image and text */
+}
+
+#chevlogo b{
+    font-size: 45px;
+    font-family: "Times New Roman", Times, serif;
+    color: black
+}
+
+#navbar{
+    color:white;
+}
+
+#avatar-container b{
+    color: black;
+}
