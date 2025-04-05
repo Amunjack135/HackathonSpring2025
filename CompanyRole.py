@@ -23,7 +23,8 @@ class MyCompanyRole:
         if MyCompanyRole.__LOADED__:
             return 0
 
-        dirs: list[FileSystem.Directory] = [FileSystem.Directory(root_dir)]
+        root_dir: FileSystem.Directory = FileSystem.Directory(root_dir)
+        dirs: list[FileSystem.Directory] = [root_dir]
 
         while len(dirs) > 0:
             base_dir: FileSystem.Directory = dirs.pop(0)
@@ -39,22 +40,34 @@ class MyCompanyRole:
 
                 with file.open('r') as fstream:
                     index: int = int(file.filename())
-                    MyCompanyRole.COMPANY_ROLES[index] = MyCompanyRole(KVP.KVP.decode(fstream.read()))
+                    offset: str = file.filepath()[len(root_dir.dirpath()):]
+                    MyCompanyRole.COMPANY_ROLES[index] = MyCompanyRole(offset, KVP.KVP.decode(fstream.read()))
 
         MyCompanyRole.__LOADED__ = True
         return len(MyCompanyRole.COMPANY_ROLES)
 
-    def __init__(self, kvp: KVP.KVP):
+    @staticmethod
+    def save(root_dir: str) -> None:
         """
-        [Constructor] - Creates a new company role
-        This will not add it to the internal listing and should not be called explicitly
-        :param kvp: The company role's KVP information
+        Saves all company roles to the specified directory
+        :param root_dir: The directory to save to
+        :return: NONE
         """
 
-        self.__role_name__: str = kvp.CompanyRole.Name[0]
-        self.__role__: str = kvp.CompanyRole.Role[0]
-        self.__required_skills__: dict[str, float] = {skill: rank[0] for skill, rank in kvp.CompanyRole.RequiredSkills}
-        self.__optional_skills__: dict[str, float] = {skill: rank[0] for skill, rank in kvp.CompanyRole.OptionalSkills}
+        root_dir: FileSystem.Directory = FileSystem.Directory(root_dir)
+
+        if not root_dir.exists():
+            root_dir.create()
+
+        for uid, role in MyCompanyRole.COMPANY_ROLES.items():
+            role_file: FileSystem.File = root_dir.file(role.__file_offset__)
+            parent: FileSystem.Directory = role_file.parentdir()
+
+            if not parent.exists():
+                parent.create()
+
+            with role_file.open('w') as fstream:
+                fstream.write(role.to_kvp().encode(True))
 
     @staticmethod
     def get_uuids_from_role_name(role_name: str) -> tuple[int, ...]:
@@ -65,6 +78,33 @@ class MyCompanyRole:
         """
 
         return tuple(uid for uid, role in MyCompanyRole.COMPANY_ROLES.items() if role.role.lower() == role_name.lower())
+
+    def __init__(self, file_offset: str, kvp: KVP.KVP):
+        """
+        [Constructor] - Creates a new company role
+        This will not add it to the internal listing and should not be called explicitly
+        :param file_offset: The relative path of this file relative to the root directory
+        :param kvp: The company role's KVP information
+        """
+
+        self.__file_offset__: str = file_offset
+        self.__role_name__: str = kvp.CompanyRole.Name[0]
+        self.__role__: str = kvp.CompanyRole.Role[0]
+        self.__active__: bool = kvp.CompanyRole.IsActive[0]
+        self.__required_skills__: dict[str, float] = {skill: rank[0] for skill, rank in kvp.CompanyRole.RequiredSkills}
+        self.__optional_skills__: dict[str, float] = {skill: rank[0] for skill, rank in kvp.CompanyRole.OptionalSkills}
+
+    def to_kvp(self) -> KVP.KVP:
+        mapping: dict = {
+            'CompanyRole': {
+                'Name': [self.__role_name__],
+                'Role': [self.__role__],
+                'IsActive': [self.__active__],
+                'RequiredSkills': {skill: [rank] for skill, rank in self.__required_skills__.items()},
+                'OptionalSkills': {skill: [rank] for skill, rank in self.__optional_skills__.items()}
+            }
+        }
+        return KVP.KVP(None, mapping)
 
     @property
     def role_name(self) -> str:
@@ -105,6 +145,26 @@ class MyCompanyRole:
 
         assert isinstance(name, str) and len(name) >= 2 and all(x.isalnum() for x in name), 'Invalid role literal ID'
         self.__role__ = name
+
+    @property
+    def active(self) -> bool:
+        """
+        Gets whether this role is active
+        :return: This role's activeness
+        """
+
+        return self.__active__
+
+    @active.setter
+    def active(self, activeness: str):
+        """
+        Sets this role's activeness
+        :param activeness: The new name, must be a bool
+        :return: NONE
+        """
+
+        assert isinstance(activeness, bool), 'Invalid role activeness'
+        self.__active__ = activeness
 
     @property
     def required_skills(self) -> dict[str, float]:

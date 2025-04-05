@@ -1,13 +1,14 @@
 >>CompanyRole
-    Name=Senior Full Stack Developer
-    Role=SeniorFullStackDeveloper
-    >>RequiredSkills
-        C++=10&D
-        Python=9&D
-        Leadership=10&D
-        XML=2.5&D
-    <<
-    >>OptionalSkills
-        Excel=5&D
-    <<
+	Name=Senior Full Stack Developer&S
+	Role=SeniorFullStackDeveloper&S
+	IsActive=true&B
+	>>RequiredSkills
+		C++=10.0&F
+		Python=9.0&F
+		Leadership=10.0&F
+		XML=2.5&F
+	<<
+	>>OptionalSkills
+		Excel=5.0&F
+	<<
 <<

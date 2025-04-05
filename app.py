@@ -35,6 +35,8 @@ def socketio_main():
 
 
 def fallback_cleanup():
+    CompanyRole.MyCompanyRole.save('data/company_roles')
+    EmployeeProfile.MyEmployeeProfile.save('data/employee_profiles')
     Resume.MyResume.save('data/resumes')
     print('Server closed.')
 
