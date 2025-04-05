@@ -133,4 +133,13 @@ select {
   padding-right: 5px;
 }
 
+#skillDialog
+{
+    min-width: 60vw;
+    max-height: 75vh;
+}
 
+#skillDialog h3
+{
+    text-decoration: underline;
+}

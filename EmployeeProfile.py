@@ -6,11 +6,19 @@ import numpy
 import typing
 import pickle
 import zlib
+import random
 
 import CustomMethodsVI.Parser.KVP as KVP
 import CustomMethodsVI.FileSystem as FileSystem
 
 import Resume
+
+
+def random_number() -> str:
+    area: int = random.randint(336, 910)
+    base3: int = random.randint(0, 999)
+    base4: int = random.randint(0, 9999)
+    return f'{area:03}-{base3:03}-{base4:04}'
 
 
 class MyEmployeeProfile:
@@ -116,6 +124,8 @@ class MyEmployeeProfile:
         self.__image__: numpy.ndarray = numpy.full((512, 512, 4), 0, numpy.uint8) if len(kvp.EmployeeProfile.Image) == 0 else numpy.reshape(numpy.frombuffer(zlib.decompress(kvp.EmployeeProfile.Image[0]), dtype=numpy.uint8), (image_size[0], image_size[1], 4))
         self.__extra_meta__: typing.Any = None if len(kvp.EmployeeProfile.Extra) == 0 else pickle.loads(kvp.EmployeeProfile.Extra[0])
         self.__bio__: str = '' if len(kvp.EmployeeProfile.Bio) == 0 else zlib.decompress(kvp.EmployeeProfile.Bio[0]).decode()
+        self.__email__: tuple[str, ...] = tuple(str(x) for x in kvp.EmployeeProfile.Email) if 'Email' in kvp.EmployeeProfile else ['somerandomemail@gmail.com']
+        self.__phone__: tuple[str, ...] = tuple(str(x) for x in kvp.EmployeeProfile.Phone) if 'Phone' in kvp.EmployeeProfile else [random_number()]
         self.__digital_portfolio__: dict[str, str] = {str(website): str(url[0]) if len(url) > 0 else '' for website, url in kvp.EmployeeProfile.DigitalPortfolio}
 
     def to_kvp(self) -> KVP.KVP:
@@ -146,7 +156,9 @@ class MyEmployeeProfile:
             'Image': [zlib.compress(self.__image__.tobytes(), zlib.Z_BEST_COMPRESSION)],
             'Extra': [] if self.__extra_meta__ is None else [pickle.dumps(self.__extra_meta__)],
             'Bio': [zlib.compress(self.__bio__.encode())],
-            'DigitalPortfolio': {website: [] if len(url) == 0 else [url] for website, url in self.__digital_portfolio__.items()}
+            'Email': self.__email__,
+            'Phone': self.__phone__,
+            'DigitalPortfolio': {website.lower(): [] if len(url) == 0 else [url] for website, url in self.__digital_portfolio__.items()}
         }
 
     @property

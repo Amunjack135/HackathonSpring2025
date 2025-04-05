@@ -1,0 +1,14 @@
+>>CompanyRole
+	Name=Junior Full Stack Developer&S
+	Role=JuniorFullStackDeveloper&S
+	IsActive=true&B
+	>>RequiredSkills
+		C++=10.0&F
+		Python=9.0&F
+		Leadership=6.5&F
+		XML=2.5&F
+	<<
+	>>OptionalSkills
+		Excel=1.0&F
+	<<
+<<

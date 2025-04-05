@@ -1,238 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Chevron SkillsAlign</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="{{ url_for('static', filename='css/common.css') }}?id=1000" rel="stylesheet" type="text/css" />
+    <link href="{{ url_for('static', filename='css/employeestyle.css') }}?id=1000" rel="stylesheet" type="text/css"/>
     <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css'>
-
-<script src='https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js'></script>
-  <link href="{{ url_for('static', filename='css/employeestyle.css') }}?id=1000" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href="{{ url_for('static', filename='icons/favicon.png') }}">
+    <title>Chevron SkillsAlign</title>
 </head>
+<body>
 <div class="container">
-
     <div class="main-body">
 
-          <!-- Breadcrumb -->
-          <nav aria-label="breadcrumb" class="main-breadcrumb">
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-              <li class="breadcrumb-item"><a href="javascript:void(0)">User</a></li>
-              <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)">User</a></li>
+                <li class="breadcrumb-item active" aria-current="page">User Profile</li>
             </ol>
-          </nav>
-          <!-- /Breadcrumb -->
+        </nav>
+        <!-- /Breadcrumb -->
 
-          <div class="row gutters-sm">
+        <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
-              <div class="card">
-                <div class="card-body">
-                  <div class="d-flex flex-column align-items-center text-center">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
-                    <div class="mt-3">
-                      <h4>John Doe</h4>
-                      <p class="text-secondary mb-1">Network Engineer</p>
-                      <p class="text-muted font-size-sm">San Francisco, CA</p>
-                      <button class="btn btn-primary">Contact</button>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin"
+                                 class="rounded-circle" width="150" id="user-icon">
+                            <div class="mt-3">
+                                <h4 id="user-name">John Doe</h4>
+                                <p class="text-secondary mb-1" id="user-role">Network Engineer</p>
+                                <p class="text-muted font-size-sm">San Francisco, CA</p>
+                                <button class="btn btn-primary">Contact</button>
+                            </div>
+                        </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-              <div class="card mt-3">
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                    <h6 class="mb-0"></svg>Since: September 17, 2012</h6>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                    <h6 class="mb-0"></svg>Previous Role: Security Engineer, Cloud Engineer</h6>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                    <h6 class="mb-0">Resume</h6>
-  <a href="https://www.dropbox.com/scl/fi/fw14m5rgpkwkuipxiq67s/KMAllen-Resume-2025-pdf.pdf?rlkey=kpl7ab4q38omejttvfq7tgege&st=orjamutm&dl=0"
-     target="_blank"
-     class="text-secondary">
-    @ExampleResume
-  </a>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                    <h6 class="mb-0"></svg>Digital Portfolio</h6>
-                    <span class="text-secondary">DoePortfolio</span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                    <h6 class="mb-0"></svg>Employee ID</h6>
-                    <span class="text-secondary">93055068</span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                    <h6 class="mb-0"></svg>Work Location</h6>
-                    <span class="text-secondary">Hybrid</span>
-                  </li>
-                </ul>
-              </div>
+                <div class="card mt-3">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <h6 class="mb-0" id="time-since"></svg>Since: September 17, 2012</h6>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <h6 class="mb-0" id="user-roles"></svg>Previous Role: Security Engineer, Cloud Engineer</h6>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <h6 class="mb-0">Resume</h6>
+                            <a href="https://www.dropbox.com/scl/fi/fw14m5rgpkwkuipxiq67s/KMAllen-Resume-2025-pdf.pdf?rlkey=kpl7ab4q38omejttvfq7tgege&st=orjamutm&dl=0"
+                               target="_blank"
+                               class="text-secondary">
+                                @ExampleResume
+                            </a>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <h6 class="mb-0"></svg>Digital Portfolio</h6>
+                            <span class="text-secondary">DoePortfolio</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <h6 class="mb-0"></svg>Employee ID</h6>
+                            <span class="text-secondary">93055068</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <h6 class="mb-0"></svg>Work Location</h6>
+                            <span class="text-secondary">Hybrid</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="row gutters-sm">
                 <div class="col-md-12 mx-auto">
-                  <div class="card mb-3 custom-card-width">
-                    <div class="card-body ">
-                      <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">Matched</i>Roles</h6>
-                      <small>Infrastructure Engineer</small>
-                      <div class="progress mb-3" style="height: 5px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                      <small> Cyber Engineer</small>
-                      <div class="progress mb-3" style="height: 5px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: 72%" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                      <small>Cloud Engineer</small>
-                      <div class="progress mb-3" style="height: 5px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: 89%" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
+                    <div class="card mb-3 custom-card-width">
+                        <div class="card-body ">
+                            <h6 class="d-flex align-items-center mb-3"><i
+                                    class="material-icons text-info mr-2">Matched</i>Roles</h6>
+                            <small>Infrastructure Engineer</small>
+                            <div class="progress mb-3" style="height: 5px">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: 80%"
+                                     aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <small> Cyber Engineer</small>
+                            <div class="progress mb-3" style="height: 5px">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: 72%"
+                                     aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <small>Cloud Engineer</small>
+                            <div class="progress mb-3" style="height: 5px">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: 89%"
+                                     aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
 
-<!--                  <hr>-->
-<!--                  <div class="row">-->
-<!--                    <div class="col-sm-12">-->
-<!--                      <a class="btn btn-info " target="__blank" href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>-->
-<!--                    </div>-->
-<!--                  </div>-->
+                            <!--                  <hr>-->
+                            <!--                  <div class="row">-->
+                            <!--                    <div class="col-sm-12">-->
+                            <!--                      <a class="btn btn-info " target="__blank" href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>-->
+                            <!--                    </div>-->
+                            <!--                  </div>-->
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <!-- Project Table Card -->
+                        <div class="col-md-12">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h6> Project Review</h6>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered mb-0 table-white">
+                                            <thead class="table-light">
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Task</th>
+                                                <th>Status</th>
+                                                <th>Progress</th>
+                                                <th>On Time</th>
+                                                <th>Late</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Web Design</td>
+                                                <td>In Progress</td>
+                                                <td>70%</td>
+                                                <td>Yes</td>
+                                                <td>No</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>Website Markup</td>
+                                                <td>In Progress</td>
+                                                <td>60%</td>
+                                                <td>No</td>
+                                                <td>Yes</td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>One Page</td>
+                                                <td>Completed</td>
+                                                <td>100%</td>
+                                                <td>Yes</td>
+                                                <td>No</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Skills Assessment Card with Native Dialog -->
+                    <div class="card">
+                        <h4><em>Skills Assessment</em></h4>
+                        <select id="skillDropdown" class="form-control mb-3" onchange="openSkillDialog()">
+                            <option value="">Select Role</option>
+                        </select>
+                        <p>Select a role to view matched skills.</p>
+                    </div>
                 </div>
-              </div>
 
-              <div class="row">
-
-<!-- Project Table Card -->
-  <div class="col-md-12">
-    <div class="card mb-3">
-      <div class="card-body">
-        <h6> Project Review</h6>
-        <div class="table-responsive">
-          <table class="table table-bordered mb-0 table-white">
-            <thead class="table-light">
-              <tr>
-                <th>#</th>
-                <th>Task</th>
-                <th>Status</th>
-                <th>Progress</th>
-                <th>On Time</th>
-                <th>Late</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>Web Design</td>
-                <td>In Progress</td>
-                <td>70%</td>
-                <td>Yes</td>
-                <td>No</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Website Markup</td>
-                <td>In Progress</td>
-                <td>60%</td>
-                <td>No</td>
-                <td>Yes</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>One Page</td>
-                <td>Completed</td>
-                <td>100%</td>
-                <td>Yes</td>
-                <td>No</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-               <!-- Skills Assessment Card with Native Dialog -->
-<div class="card">
- <h4><em>Skills Assessment</em></h4>
- <select id="skillDropdown" class="form-control mb-3" onchange="openSkillDialog()">
-   <option value="">Select Role</option>
-
-
-      <option value="frontend">Cyber Engineer</option>
-      <option value="backend">Infrastructure Engineer</option>
-      <option value="network">Cloud Engineer</option>
-    </select>
-    <p>Select a role to view matched skills.</p>
-  </div>
-</div>
-
-<!-- Native Dialog Box -->
-<dialog id="skillDialog" style="border-radius: 8px; padding: 20px; width: 400px;">
-  <h5>Skill Match</h5>
-  <div id="skillsGraphContainer"></div>
-  <button onclick="document.getElementById('skillDialog').close()" class="btn btn-secondary mt-3">Close</button>
-</dialog>
-
-                  <script>
-  const skillData = {
-    frontend: {
-      HTML: 90,
-      CSS: 85,
-      JavaScript: 80,
-      React: 70
-    },
-    backend: {
-      NodeJS: 85,
-      MongoDB: 75,
-      Python: 70,
-      APIs: 80
-    },
-    network: {
-      Cisco: 95,
-      Firewall: 85,
-      Cloud: 75,
-      Security: 80
-    }
-  };
-
-  function openSkillDialog() {
-    const role = document.getElementById("skillDropdown").value;
-    const dialog = document.getElementById("skillDialog");
-    const container = document.getElementById("skillsGraphContainer");
-
-    if (!role || !skillData[role]) return;
-
-    container.innerHTML = "";
-
-    Object.entries(skillData[role]).forEach(([skill, percent]) => {
-      const wrapper = document.createElement("div");
-      wrapper.className = "mb-2";
-
-      const label = document.createElement("div");
-      label.innerText = `${skill}: ${percent}%`;
-
-      const bar = document.createElement("div");
-      bar.style.width = percent + "%";
-      bar.style.height = "20px";
-      bar.style.backgroundColor = "#007bff";
-      bar.style.color = "#fff";
-      bar.style.textAlign = "right";
-      bar.style.paddingRight = "5px";
-      bar.style.borderRadius = "4px";
-      bar.innerText = percent + "%";
-
-      wrapper.appendChild(label);
-      wrapper.appendChild(bar);
-      container.appendChild(wrapper);
-    });
-
-    dialog.showModal();
-  }
-</script>
-
-
-
-
-
+                <!-- Native Dialog Box -->
+                <dialog id="skillDialog" style="border-radius: 8px; padding: 20px; width: 400px;">
+                    <h3>Overall Results</h3>
+                    <div id="resultsGraphContainer"></div>
+                    <h3>Skill Match</h3>
+                    <div id="skillsGraphContainer"></div>
+                    <button onclick="document.getElementById('skillDialog').close()" class="btn btn-secondary mt-3">
+                        Close
+                    </button>
+                </dialog>
             </div>
-          </div>
-          </div>
-
         </div>
-            </div></html></div></div>
+    </div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/common.js') }}"></script>
+<script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+<script src='https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js'></script>
+</body>

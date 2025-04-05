@@ -100,16 +100,17 @@ class MyCompanyRole:
         :return: A KVP object
         """
 
-        mapping: dict = {
-            'CompanyRole': {
-                'Name': [self.__role_name__],
-                'Role': [self.__role__],
-                'IsActive': [self.__active__],
-                'RequiredSkills': {skill: [rank] for skill, rank in self.__required_skills__.items()},
-                'OptionalSkills': {skill: [rank] for skill, rank in self.__optional_skills__.items()}
-            }
-        }
+        mapping: dict = {'CompanyRole': self.to_dict()}
         return KVP.KVP(None, mapping)
+
+    def to_dict(self) -> dict:
+        return {
+            'Name': [self.__role_name__],
+            'Role': [self.__role__],
+            'IsActive': [self.__active__],
+            'RequiredSkills': {skill: [rank] for skill, rank in self.__required_skills__.items()},
+            'OptionalSkills': {skill: [rank] for skill, rank in self.__optional_skills__.items()}
+        }
 
     @property
     def role_name(self) -> str:

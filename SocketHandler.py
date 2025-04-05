@@ -54,9 +54,19 @@ def init(socketio: Connection.FlaskSocketioServer, gpt_api: gpt.MyGPTAPI) -> Non
             user['Image'][0] = cv2.imencode('.jpg', employee.image_icon)[1].tobytes()
             socket.emit('employee_data', {uid: user})
 
+        @socket.on('request_company_roles')
+        def on_request_company_roles():
+            socket.emit('company_roles', {role_id: role.to_dict() for role_id, role in CompanyRole.MyCompanyRole.COMPANY_ROLES.items()})
+
         @socket.on('request_employee_skills')
         def on_request_employee_skills(uid: int):
-            pass
+            if uid not in EmployeeProfile.MyEmployeeProfile.EMPLOYEES:
+                socket.emit('employee_skills', None)
+                return
+
+            employee: EmployeeProfile.MyEmployeeProfile = EmployeeProfile.MyEmployeeProfile.EMPLOYEES[uid]
+            data: dict = gpt_api.match_employee_to_role(employee, CompanyRole.MyCompanyRole.COMPANY_ROLES)
+            socket.emit('employee_skills', data);
 
         @socket.on('request_employee_ranked_roles')
         def on_request_employee_ranked_roles(uid: int):

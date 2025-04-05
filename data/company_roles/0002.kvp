@@ -1,0 +1,12 @@
+>>CompanyRole
+	Name=HR Manager&S
+	Role=HumanResourcesManager&S
+	IsActive=true&B
+	>>RequiredSkills
+		DataEntry=8.0&F
+		Leadership=5.0&F
+	<<
+	>>OptionalSkills
+		CMS=9.5&F
+	<<
+<<
