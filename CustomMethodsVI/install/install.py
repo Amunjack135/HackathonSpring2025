@@ -9,6 +9,7 @@ import shutil
 from CustomMethodsVI.Parser.KVP import KVP
 
 def is_admin():
+	return True
 	try:
 		return ctypes.windll.shell32.IsUserAnAdmin()
 	except:
@@ -35,7 +36,7 @@ if __name__ == '__main__':
 						exec(f'import {package.replace("-", "_")}')
 						print('\033[38;2;75;100;255mAlready Installed\033[0m')
 					except ImportError:
-						result = subprocess.run(['pip3', 'install', name], stdout=subprocess.DEVNULL)
+						result = subprocess.run(['py', '-m', 'pip', 'install', name], stdout=subprocess.DEVNULL)
 
 						if result.returncode == 0:
 							print('\033[38;2;0;255;0mSuccess\033[0m')
