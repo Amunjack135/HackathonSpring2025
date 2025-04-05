@@ -45,7 +45,14 @@ def init(socketio: Connection.FlaskSocketioServer, gpt_api: gpt.MyGPTAPI) -> Non
 
         @socket.on('request_employee_data')
         def on_request_employee_data(uid: int):
-            pass
+            if uid not in EmployeeProfile.MyEmployeeProfile.EMPLOYEES:
+                socket.emit('employee_data', None)
+                return
+
+            employee: EmployeeProfile.MyEmployeeProfile = EmployeeProfile.MyEmployeeProfile.EMPLOYEES[uid]
+            user: dict = employee.to_dict()
+            user['Image'][0] = cv2.imencode('.jpg', employee.image_icon)[1].tobytes()
+            socket.emit('employee_data', {uid: user})
 
         @socket.on('request_employee_skills')
         def on_request_employee_skills(uid: int):

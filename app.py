@@ -30,11 +30,6 @@ def employee():
     return flask.render_template('employeeskils.html')
 
 
-@app.route('/ncathack/profile', methods=('GET',))
-def profile():
-    return flask.render_template('profile.html')
-
-
 def socketio_main():
     try:
         socketio.async_listen(port=443)
