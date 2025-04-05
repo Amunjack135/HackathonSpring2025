@@ -57,7 +57,7 @@ class MyEmployeeProfile:
         self.__project_ids__: list[int] = [int(x) for x in kvp.EmployeeProfile.ProjectIDs]
         self.__performance_review_ids__: list[int] = [int(x) for x in kvp.EmployeeProfile.PerfReviewIDs]
         self.__assessment_ids: list[int] = [int(x) for x in kvp.EmployeeProfile.AssessmentIDs]
-        self.__roles__: list[str] = kvp.EmployeeProfile.CurrentRole
+        self.__roles__: list[str] = list(kvp.EmployeeProfile.CurrentRole)
 
         if len(kvp.EmployeeProfile.ResumeID) == 3:
             self.__resume_batch_id__: slice = slice(kvp.EmployeeProfile.ResumeID[0], kvp.EmployeeProfile.ResumeID[1])
@@ -107,3 +107,39 @@ class MyEmployeeProfile:
         """
 
         return Resume.MyResume.get_resume(self.__resume_batch_id__, self.__resume_file_id__)
+
+    @property
+    def current_roles(self) -> tuple[str, ...]:
+        """
+        Gets this employee's current role(s)
+        :return: This employee's current role(s)
+        """
+
+        return tuple(self.__roles__)
+
+    @property
+    def image_icon(self) -> numpy.ndarray:
+        """
+        Gets this employee's icon image
+        :return: This employee's icon image
+        """
+
+        return self.__image__.copy()
+
+    @property
+    def bio(self) -> str:
+        """
+        Gets this employee's bio
+        :return: This employee's bio
+        """
+
+        return self.__bio__
+
+    @property
+    def metadata(self) -> typing.Any:
+        """
+        Gets this employee's extra metadata
+        :return: This employee's extra metadata
+        """
+
+        return self.__extra_meta__
