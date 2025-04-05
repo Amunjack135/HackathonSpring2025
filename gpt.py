@@ -118,9 +118,8 @@ class MyGPTAPI:
     def partial_match_score(self, skill_1, skill_2):
         return SequenceMatcher(None, skill_1, skill_2).ratio()  # Returns a value between 0 and 1
 
-    def match_employee_to_role(self, employee: EmployeeProfile.MyEmployeeProfile,
-                               company_roles: dict[int, CompanyRole.MyCompanyRole]):
-        role_scores: dict[int, float] = {}
+    def match_employee_to_role(self, employee: EmployeeProfile.MyEmployeeProfile, company_roles: dict[int, CompanyRole.MyCompanyRole]) -> dict[int, dict[str, float]]:
+        role_scores: dict[int, dict[str, float]] = {}
         active_roles: set[str] = set(role.role_name for role in company_roles.values())
         extra_skills_input: list[dict[str, typing.Any]] = self.company_skills(active_roles)
         extra_skills: dict[int, dict[str, float]] = {}
@@ -136,61 +135,82 @@ class MyGPTAPI:
                 extra_skills[uid] = info['skills']
 
         normalized_employee_skills = [skill.strip().lower() for skill in employee.skills]
+        resume: Resume.MyResume | None = employee.resume
+
+        if resume is not None:
+            normalized_employee_skills.extend(skill.strip().lower() for skill in self.get_skills_from_resume(resume))
 
         for uid, role in company_roles.items():
             required_score = 0
             optional_score = 0
             extra_score = 0
-
+            required_role_max_score: float = sum(role.required_skills.values())
+            optional_role_max_score: float = sum(role.optional_skills.values())
+            skill_results: dict[str, float] = {}
             normalized_role_required_skills = {k.strip().lower(): v for k, v in role.required_skills.items()}
             normalized_role_optional_skills = {k.strip().lower(): v for k, v in role.optional_skills.items()}
             normalized_role_extra_skills = {k.strip().lower(): v for k, v in extra_skills.get(uid, {}).items()}
 
             # Calculate required skills score
             for skill, weight in normalized_role_required_skills.items():
+                if skill not in skill_results:
+                    skill_results[skill] = 0
+
                 if skill in normalized_employee_skills:
                     required_score += weight
+                    skill_results[skill] += weight
                 else:
                     for emp_skill in normalized_employee_skills:
                         similarity = self.partial_match_score(emp_skill, skill)
                         if similarity > 0.6:
-                            required_score += weight * similarity
-                            break
+                            points: float = weight * similarity
+                            required_score += points
+                            skill_results[skill] += points
 
             # Calculate optional skills score
             for skill, weight in normalized_role_optional_skills.items():
+                if skill not in skill_results:
+                    skill_results[skill] = 0
+
                 if skill in normalized_employee_skills:
                     optional_score += weight
+                    skill_results[skill] = weight
                 else:
                     for emp_skill in normalized_employee_skills:
                         similarity = self.partial_match_score(emp_skill, skill)
                         if similarity > 0.6:
-                            optional_score += weight * similarity
-                            break
+                            points: float = weight * similarity
+                            optional_score += points
+                            skill_results[skill] = points
 
             # Calculate extra (AI) skills score
             for skill, weight in normalized_role_extra_skills.items():
+                if skill not in skill_results:
+                    skill_results[skill] = 0
+
                 if skill in normalized_employee_skills:
                     extra_score += weight
                 else:
                     for emp_skill in normalized_employee_skills:
                         similarity = self.partial_match_score(emp_skill, skill)
                         if similarity > 0.6:
-                            extra_score += weight * similarity
-                            break
+                            points: float = weight * similarity
+                            extra_score += points
+                            skill_results[skill] = points
 
             total_score = required_score + optional_score + extra_score
 
-            print(f"\nRole: {role.role_name}")
-            print(f"Required Score: {required_score:.2f}")
-            print(f"Optional Score: {optional_score:.2f}")
-            print(f"Extra (AI) Score: {extra_score:.2f}")
-            print(f"Total Score: {total_score:.2f}")
+            role_scores[uid] = {
+                'Required': required_score,
+                'Optional': optional_score,
+                'RequiredPartial': required_score / required_role_max_score,
+                'OptionalPartial': optional_score / optional_role_max_score,
+                'ExtraAI': extra_score,
+                'Total': total_score,
+                'IndividualSkills': skill_results
+            }
 
-            role_scores[uid] = total_score
-
-        top_matches: list[tuple[int, float]] = sorted(role_scores.items(), key=lambda x: x[1], reverse=True)
-        return {pair[0]: pair[1] for pair in top_matches}
+        return role_scores
 
 
 

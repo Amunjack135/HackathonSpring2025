@@ -21,9 +21,14 @@ CompanyRole.MyCompanyRole.load('data/company_roles')
 Resume.MyResume.load('data/resumes')
 
 
-@app.route('/ncathack')
+@app.route('/ncathack', methods=('GET',))
 def index():
     return flask.render_template('index.html')
+
+
+@app.route('/ncathack/profile', methods=('GET',))
+def profile():
+    return flask.render_template('profile.html')
 
 
 def socketio_main():
