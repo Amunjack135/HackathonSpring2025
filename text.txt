@@ -1,57 +1,58 @@
-Name: Jordan Avery
-Email: jordan.avery@email.com
-Phone: (555) 123-4567
-Location: Houston, TX
-
-Professional Summary
-Detail-oriented and innovative software engineer with 4+ years of experience in cloud infrastructure, data engineering, and cybersecurity. Adept at designing scalable systems, optimizing data pipelines, and ensuring secure deployment across enterprise environments. Proven track record in cross-functional team collaboration and delivering high-impact digital solutions.
-
-Technical Skills
-Programming: Python, Java, SQL, Bash
-
-Cloud Platforms: AWS, Azure
-
-Tools: Docker, Kubernetes, Terraform, Jenkins
-
-Data: Apache Spark, Pandas, Tableau
-
-Security: NIST Framework, Vulnerability Management, SIEM
-
-Soft Skills: Communication, Team Leadership, Critical Thinking
-
-Certifications
-AWS Certified Solutions Architect
-
-CompTIA Security+
-
-Certified Kubernetes Administrator (CKA)
-
-Professional Experience
-Chevron – Houston, TX
-Software Engineer III
-Jan 2022 – Present
-
-Led the design and implementation of a containerized microservices architecture using Kubernetes and Docker.
-
-Automated CI/CD pipelines using Jenkins and GitHub Actions, reducing deployment time by 40%.
-
-Collaborated with cybersecurity team to audit systems and integrate Security-as-Code practices.
-
-Infosys – Dallas, TX
-Cloud and Infrastructure Engineer
-Aug 2019 – Dec 2021
-
-Migrated legacy systems to Azure cloud infrastructure using Terraform and Ansible.
-
-Built monitoring dashboards for infrastructure health using Grafana and Prometheus.
-
-Created scalable ETL pipelines with Apache Spark and Python to support analytics teams.
-
-Education
-B.S. in Computer Science
-Texas A&M University — Class of 2019
-
-Projects
-Real-Time Cyber Threat Detection System – Developed a Python-based tool to detect anomalies across network traffic.
-
-DataOps Dashboard – Designed a BI tool in Tableau integrated with live data streams from Kafka. a
+Amun Jackson
+Charlotte, N.C. 28216 | (929) 318-1963 | amunjackson135@gmail.com
+EDUCATION
+North Carolina A&T State University, Expected May 2026 Bachelor of Engineering in Computer Science; 3.79 GPA
+Greensboro, NC
+Relevant Coursework: Intro to Computer Programming (taught by Google Engineer in Residence - Dr. Tom Bersano), Discrete Structures, Computer
+Program Design, Data Structures, Algorithms Data Base Design, Calculus 1, Calculus 2, Differential Equations
+SKILLS AND SOFTWARE PROFICIENCIES
+Python • C++• JavaScript • Java • HTML • CSS • SQL • Linux • R • PyCharm • Vscode • IntelliJ • RStudio • Clion
+WORK & LEADERSHIP EXPERIENCE
+Directorate of Science and Technology Undergraduate Intern Central Intelligence Agency (CIA) Washington, DC
+Summer 2024
+• Completed an intensive 90-day internship with the CIA, contributing to the Agency’s mission in a high-stakes environment.
+• Developed software and hardware solutions, performed custom engineering, conducted technology analysis, and integrating skills in technical
+projects.
+• Enhanced knowledge and proficiency in operating systems, communication technologies, mobile platforms, and computer networks.
+• Leveraged software skills to address national security threats, ensuring robust and secure solutions.
+• Obtained TS/SCI clearance with a full polygraph, demonstrating high levels of trust and responsibility.
+Research Experiences for Undergraduates (REU) in Data Science and Analytics North Carolina Agricultural and Technical State University Greensboro, NC
+Summer 2023
+• Participated in a ten-week program focused on investigative research in data science and analytics.
+• Applied classical methods and explored new methodologies and applications to tackle challenging research questions in data science and
+machine learning.
+• Short courses on data science, including topics such as data analytics, network science, graph theory, cybersecurity, statistical/machine learning,
+and optimization.
+• Worked on a project involving Generative Adversarial Networks (GANs) to generate artificial genetic and protein sequences with similarities to
+real-world natural sequences.
+Research Assistant for Trustworthy Cyber-Physical Defense Systems via Ai and Shared Autonomy (TCASA) Greensboro, NC
+North Carolina Agricultural and Technical State University Fall 2023
+• Published a research paper titled "Explainable Machine Learning IDS for IoT" in the CSCE 2024 Conference with Springer Nature
+• Actively collaborating on a research initiative, contributing to the advancement of Explainable AI in the field of cybersecurity.
+• Specializing in Explainable Machine Learning and its critical role in unraveling the logic behind a machine learning model's classification of
+network traffic as malicious or benign.
+• Contributing to project success and gaining hands-on experience in cutting-edge cybersecurity techniques, all while serving as an undergraduate
+research assistant.
+PROJECTS
+[Generative Adversarial Networks for Evaluating Genetic and Protein Sequences], [Python, TensorFlow]
+• Utilized GANs to generate artificial genetic and protein sequences with similarities to real-world natural sequences, focusing on G Protein-
+Coupled Receptors (GPCRs) as training data.
+• Implemented a Basic Local Alignment Search Tool (BLAST) to assess the degree of similarity between the generated sequences and natural
+sequences using the E-value metric.
+• Successfully generated sequences matching a specific GPCR protein, CXCR4, and observed hits in BLAST searches for membrane protein
+varieties, indicating GAN's capability to produce similar sequences.
+[Keep Up Web App], [Python, Flask, OpenAI API]
+• Developed a web application tailored for cognitive-impaired users, leveraging OpenAI’s ChatGPT to analyze user input and emails,
+generating personalized task schedules and time management goals.
+• Integrated an AI chatbot to extract events from user input and emails, simplifying task management and time tracking.
+• Developed a calendar with a streak system and Tkinter notifications for real-time task reminders, boosting productivity.
+[AI-Powered Coding Interview Question Generator and Evaluator for Chevron], [Python, Flask, Socket.io, Open Ai’s Chat GPT]
+• Developed an AI-driven prototype that accurately assesses technical skills and provides unbiased appraisals of technical professionals during
+the job application process.
+• Designed an AI model that generates technical questions tailored to applicants' classifications and disciplines.
+• Implemented an answer evaluation system, providing applicants with feedback and a rating on a scale of 1 to 10.
+• Developed a user-friendly web interface using Flask and Socket.io for real-time interaction.
+ACTIVITIES & HONORS
+Chancellors List: (Spring 2023,Fall 2023, Spring 2024, Dean’s List: Fall 2022) , Association of Computing Machinery (ACM), National Society of Black
+Engineers (NSBE), Upsilon Pi Epsilon (UPE), NCAT Hackathon Spring 2023 - Chevron Third Place Winner: Renewable Energy Predictive Model, NCAT
+Hackathon Fall 2023 - Chevron Second Place Winner, Captain - NCAT Black Enterprise Hackathon Team, Bloomberg Academy of Excellence Scholar
