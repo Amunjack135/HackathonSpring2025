@@ -1,0 +1,57 @@
+Name: Jordan Avery
+Email: jordan.avery@email.com
+Phone: (555) 123-4567
+Location: Houston, TX
+
+Professional Summary
+Detail-oriented and innovative software engineer with 4+ years of experience in cloud infrastructure, data engineering, and cybersecurity. Adept at designing scalable systems, optimizing data pipelines, and ensuring secure deployment across enterprise environments. Proven track record in cross-functional team collaboration and delivering high-impact digital solutions.
+
+Technical Skills
+Programming: Python, Java, SQL, Bash
+
+Cloud Platforms: AWS, Azure
+
+Tools: Docker, Kubernetes, Terraform, Jenkins
+
+Data: Apache Spark, Pandas, Tableau
+
+Security: NIST Framework, Vulnerability Management, SIEM
+
+Soft Skills: Communication, Team Leadership, Critical Thinking
+
+Certifications
+AWS Certified Solutions Architect
+
+CompTIA Security+
+
+Certified Kubernetes Administrator (CKA)
+
+Professional Experience
+Chevron – Houston, TX
+Software Engineer III
+Jan 2022 – Present
+
+Led the design and implementation of a containerized microservices architecture using Kubernetes and Docker.
+
+Automated CI/CD pipelines using Jenkins and GitHub Actions, reducing deployment time by 40%.
+
+Collaborated with cybersecurity team to audit systems and integrate Security-as-Code practices.
+
+Infosys – Dallas, TX
+Cloud and Infrastructure Engineer
+Aug 2019 – Dec 2021
+
+Migrated legacy systems to Azure cloud infrastructure using Terraform and Ansible.
+
+Built monitoring dashboards for infrastructure health using Grafana and Prometheus.
+
+Created scalable ETL pipelines with Apache Spark and Python to support analytics teams.
+
+Education
+B.S. in Computer Science
+Texas A&M University — Class of 2019
+
+Projects
+Real-Time Cyber Threat Detection System – Developed a Python-based tool to detect anomalies across network traffic.
+
+DataOps Dashboard – Designed a BI tool in Tableau integrated with live data streams from Kafka.
