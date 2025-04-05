@@ -5,7 +5,7 @@ from openai import OpenAI
 with open('config.json') as f:
     config = json.load(f)
 
-api_key = config.get("OPENAI_API_KEY")
+api_key = config.get("OPENAI_API_KEYS")
 
 if not api_key:
     raise ValueError("API key not found in config.json.")
@@ -182,6 +182,7 @@ print(employee_skills)
 company = companySkills()
 
 print(match_employee_to_role(employee_skills, company))
+#hello
 
 
 
