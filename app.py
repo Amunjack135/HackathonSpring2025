@@ -3,7 +3,7 @@ import time
 
 import CustomMethodsVI.Connection as Connection
 
-app: flask.Flask = flask.Flask(__name__)
+app: flask.Flask = flask.Flask(__name__, static_folder='static', template_folder='templates')
 socketio: Connection.FlaskSocketioServer = Connection.FlaskSocketioServer(app)
 
 

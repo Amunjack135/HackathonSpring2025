@@ -1,0 +1,12 @@
+>>CompanyRole
+    Name=Senior Full Stack Developer
+    Role=SeniorFullStackDeveloper
+    >>RequiredSkills
+        C++=10&D
+        Python=9&D
+        Leadership=10&D
+        XML=2.5&D
+    <<
+    >>OptionalSkills
+    <<
+<<
