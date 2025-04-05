@@ -6,24 +6,33 @@ import CustomMethodsVI.Connection as Connection
 
 import SocketHandler
 import EmployeeProfile
+import EmployeeAssessment
 import CompanyRole
 import Resume
+import gpt
 
+GPTAPI: gpt.MyGPTAPI = gpt.MyGPTAPI()
 app: flask.Flask = flask.Flask(__name__, static_folder='static', template_folder='templates')
 socketio: Connection.FlaskSocketioServer = Connection.FlaskSocketioServer(app)
-SocketHandler.init(socketio)
+SocketHandler.init(socketio, GPTAPI)
 EmployeeProfile.MyEmployeeProfile.load('data/employee_profiles')
+EmployeeAssessment.MyEmployeeAssessment.load('data/employee_assessments')
 CompanyRole.MyCompanyRole.load('data/company_roles')
 Resume.MyResume.load('data/resumes')
 
 
-@app.route('/ncathack')
+@app.route('/ncathack', methods=('GET',))
 def index():
     return flask.render_template('index.html')
 
 @app.route('/ncathack/employeeskills')
 def employee():
     return flask.render_template('employeeskils.html')
+
+
+@app.route('/ncathack/profile', methods=('GET',))
+def profile():
+    return flask.render_template('profile.html')
 
 
 def socketio_main():
@@ -39,6 +48,9 @@ def socketio_main():
 
 
 def fallback_cleanup():
+    CompanyRole.MyCompanyRole.save('data/company_roles')
+    EmployeeProfile.MyEmployeeProfile.save('data/employee_profiles')
+    EmployeeAssessment.MyEmployeeAssessment.save('data/employee_assessments')
     Resume.MyResume.save('data/resumes')
     print('Server closed.')
 
