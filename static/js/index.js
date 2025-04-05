@@ -3,6 +3,7 @@
 
     socket.on('employee_previews', (previews) => {
         let root = document.getElementById('avatar-container');
+        while (root.firstChild) root.removeChild(root.lastChild);
 
         for (let uid in previews)
         {
@@ -17,6 +18,10 @@
             container.appendChild(image);
             container.appendChild(name);
             root.appendChild(container);
+
+            container.onclick = (event) => {
+              window.open(`/ncathack/employeeskills?uid=${uid}`, '_self');
+            };
         }
     });
 
