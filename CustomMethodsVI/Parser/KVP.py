@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import base64
 import typing
 import typeguard
 
@@ -15,12 +16,12 @@ class KVP:
 		Responsible for storing a value and its associated format specifier
 		"""
 
-		def __init__(self, value: int | float | str | None, formatter: str):
-			self.value: int | float | str | None = value
+		def __init__(self, value: int | float | str | bytes | None, formatter: str):
+			self.value: int | float | str | bytes | None = value
 			self.formatter: str = formatter
 
 		def valid(self) -> bool:
-			return self.formatter in ('B', 'I', 'X', 'O', 'F', 'D', 'S', '') and (self.value is None or isinstance(self.value, (float, int, str)))
+			return self.formatter in ('B', 'I', 'L', 'O', 'F', 'D', 'S', 'X', '') and (self.value is None or isinstance(self.value, (float, int, str, bytes)))
 
 	class __ListWrapper__[T](typing.Sized, typing.Iterable[T]):
 		def __init__(self, list_: list):
@@ -164,7 +165,7 @@ class KVP:
 						return KVP.__FormatMarker__(int(value), 'I')
 					except ValueError:
 						raise KVPDecodeError(f'Failed to format value \'{value}\' as integer-10 - LINE.{line_number + 1} {line}')
-			elif formatter == '&X':
+			elif formatter == '&L':
 				if len(bit_length_str := formatter[2:]):
 					try:
 						bit_length = int(bit_length_str)
@@ -214,6 +215,8 @@ class KVP:
 					return KVP.__FormatMarker__(float(value), 'D')
 				except ValueError:
 					raise KVPDecodeError(f'Failed to format value \'{value}\' as double - LINE.{line_number + 1} {line}')
+			elif formatter == '&X':
+				return  KVP.__FormatMarker__(base64.b64decode(value.encode()), 'X')
 			elif formatter == '&S':
 				return KVP.__FormatMarker__(value, 'S')
 			elif formatter == '&':
@@ -308,7 +311,7 @@ class KVP:
 			return False
 
 	@staticmethod
-	def __mark_formatter__(val: 'int | float | str | None | KVP.__FormatMarker__') -> KVP.__FormatMarker__:
+	def __mark_formatter__(val: int | float | str | bytes | None | KVP.__FormatMarker__) -> KVP.__FormatMarker__:
 		"""
 		INTERNAL METHOD; DO NOT USE
 		Appends the format specifier to a value for storage in a KVP object
@@ -316,18 +319,20 @@ class KVP:
 		:return: (---) The marked value
 		"""
 
-		if type(val) is int:
+		if isinstance(val, int):
 			return KVP.__FormatMarker__(val, 'I')
-		elif type(val) is float:
+		elif isinstance(val, float):
 			return KVP.__FormatMarker__(val, 'F')
 		elif val is None:
 			return KVP.__FormatMarker__(val, '')
-		elif type(val) is KVP.__FormatMarker__:
+		elif isinstance(val, KVP.__FormatMarker__):
 			return val
+		elif isinstance(val, bytes):
+			return KVP.__FormatMarker__(val, 'X')
 		else:
 			return KVP.__FormatMarker__(str(val), 'S')
 
-	def __init__(self, namespace_name: str | None, data: dict[str, list[int | float | str | None] | list[KVP.__FormatMarker__] | KVP | dict]):
+	def __init__(self, namespace_name: str | None, data: dict[str, list[int | float | str | bytes | None] | list[KVP.__FormatMarker__] | KVP | dict]):
 		"""
 		[KVP] - Class providing parsing capabilities for the custom KeyValuePair (KVP) data storage format
 		- Constructor -
@@ -339,7 +344,7 @@ class KVP:
 		"""
 
 		assert type(data) is dict, 'Not a dictionary'
-		valid_types: tuple[type, ...] = (int, float, str, type(None), type(self))
+		valid_types: tuple[type, ...] = (int, float, str, type(None), type(self), bytes, bytearray)
 		super().__setattr__('__initialized__', False)
 		self.__mapping__: dict[str, list[KVP.__FormatMarker__] | KVP] = {}
 		self.__namespace__: str = f'KVP @ {hex(id(self))} (ROOT)' if namespace_name is None else str(namespace_name)
@@ -378,12 +383,14 @@ class KVP:
 			formatter: str = value.formatter
 			value: str = value.value
 
-			if formatter == 'X':
+			if formatter == 'L':
 				return f'{value:X}'
 			elif formatter == 'O':
 				return f'{value:O}'
 			elif formatter == 'S':
 				return f'"{value}"' if '\'' in value else f'"""{value}"""' if '\'' in value and '"' in value else f'\'{value}\''
+			elif formatter == 'X':
+				return f'b"{value}"'
 			else:
 				return str(value)
 
@@ -392,14 +399,14 @@ class KVP:
 	def __contains__(self, item: str) -> bool:
 		return item in self.__mapping__
 
-	def __getitem__(self, item: str) -> KVP.__ListWrapper__[int | float | str | None] | KVP:
+	def __getitem__(self, item: str) -> KVP.__ListWrapper__[int | float | str | bytes | None] | KVP:
 		value = self.__mapping__[item]
 		return KVP.__ListWrapper__(value) if type(value) is list else value
 
-	def __getattr__(self, item: str) -> list[int | float | str | None] | KVP:
+	def __getattr__(self, item: str) -> list[int | float | str | bytes | None] | KVP:
 		return self[item]
 
-	def __setitem__(self, key: str, value: list[int | float | str | None] | int | float | str | None | KVP | dict):
+	def __setitem__(self, key: str, value: list[int | float | str | bytes | None] | int | float | str | bytes | None | KVP | dict):
 		valid_types: tuple[type, ...] = (int, float, str, type(None), type(self))
 		key = str(key)
 
@@ -462,12 +469,14 @@ class KVP:
 			formatter = value.formatter
 			value = value.value
 
-			if formatter == 'X':
+			if formatter == 'L':
 				return f'{value:X}'
 			elif formatter == 'O':
 				return f'{value:O}'
 			elif formatter == 'S':
 				return f'"{value}"' if '\'' in value else f'"""{value}"""' if '\'' in value and '"' in value else f'\'{value}\''
+			elif formatter == 'X':
+				return f'b"{value}"'
 			else:
 				return str(value)
 
@@ -498,8 +507,8 @@ class KVP:
 			formatter = value.formatter
 			value = value.value
 
-			if formatter == 'X':
-				return f'{value:X}&X'
+			if formatter == 'L':
+				return f'{value:X}&L'
 			elif formatter == 'O':
 				return f'{value:O}&O'
 			elif formatter == 'F':
@@ -508,8 +517,8 @@ class KVP:
 				return f'{value}&{formatter}' if explicit_str_format else f'{value}'
 			elif formatter == 'I':
 				return f'{value}&I'
-			elif formatter == '':
-				return ''
+			elif formatter == 'X':
+				return f'{base64.b64encode(value).decode()}&X'
 			else:
 				raise KVPEncodeError(f'Invalid format specifier: \'{formatter}\'')
 
