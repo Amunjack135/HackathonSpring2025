@@ -1,0 +1,15 @@
+@media only screen and (orientation:portrait)
+{
+    div#main-box
+    {
+        max-width: 99vw;
+        min-width: 75vw;
+    }
+
+    .avatar-container img
+    {
+        max-width: 30vw;
+        height: 7.5vh;
+        margin: auto;
+    }
+}

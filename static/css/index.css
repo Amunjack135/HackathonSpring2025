@@ -125,7 +125,7 @@ button:hover
     padding: 1vh 1vw;
 }
 
-.avatar-container
+#avatar-container
 {
     display: grid;
     grid-template-columns: repeat(auto-fit, 20%);
@@ -135,24 +135,26 @@ button:hover
     margin: 0 auto;
 }
 
-.avatar-container div
+#avatar-container div
 {
     text-align: center;
-    margin: 1vh 1vw;
-    overflow: hidden;
+    margin: 1vh auto;
     cursor: pointer;
 }
 
-.avatar-container img
+#avatar-container img
 {
     max-width: 15vw;
     height: 15vh;
-    margin: auto;
+    border: 0.125rem solid black;
+    overflow: hidden;
+    padding: 0;
 }
 
-.avatar-container span
+#avatar-container span
 {
     color:black;
+    font-size: 1rem;
 }
 
 #chevlogo img{
