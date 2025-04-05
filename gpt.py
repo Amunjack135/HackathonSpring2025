@@ -2,6 +2,10 @@ from openai import OpenAI
 
 client = OpenAI(api_key="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")
 
+# import EmployeeProfile, CompanyRole
+# EmployeeProfile.MyEmployeeProfile.load('data/employee_profiles')
+# CompanyRole.MyCompanyRole.load('data/company_roles')
+
 
 def skills(text):
     response = client.responses.create(
@@ -18,7 +22,6 @@ def skills(text):
         Given the following resume or employee data, do the following:
 
         1. Extract **exactly 8** key skills (both technical and soft skills, certifications, or tools).
-        2. Identify the **most suitable Chevron role** for this individual from the list below:
 
         Chevron Roles:
         - Cloud Engineer
@@ -36,8 +39,7 @@ def skills(text):
 
         **Return your answer in this format:**
 
-        Skills: [Comma-separated list of 8 relevant skills]  
-        Best Role Match: [One role from the list above]
+        Comma-separated list of 8 relevant skills
 
         Employee Data:
         {text}
@@ -45,6 +47,7 @@ def skills(text):
         ,
         input=text,
     )
+
     return response.output_text
 
 def read_file(file):
