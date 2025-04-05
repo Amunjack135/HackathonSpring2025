@@ -51,6 +51,16 @@ class MyCompanyRole:
         self.__required_skills__: dict[str, float] = {skill: rank[0] for skill, rank in kvp.CompanyRole.RequiredSkills}
         self.__optional_skills__: dict[str, float] = {skill: rank[0] for skill, rank in kvp.CompanyRole.OptionalSkills}
 
+    @staticmethod
+    def get_uuids_from_role_name(role: str) -> tuple[int, ...]:
+        """
+        Gets all role uids for a given role name
+        :param role: The role to check
+        :return: The role uids matching this role
+        """
+
+        return tuple(uid for uid, role in MyCompanyRole.COMPANY_ROLES.items() if role.role == role)
+
     @property
     def role_name(self) -> str:
         """

@@ -45,6 +45,16 @@ class MyEmployeeProfile:
 
         return len(MyEmployeeProfile.EMPLOYEES)
 
+    @staticmethod
+    def get_employees_by_name(name: str) -> tuple[MyEmployeeProfile, ...]:
+        """
+        Gets all employees with the specified name
+        :param name: The employee name
+        :return: All matching employees
+        """
+
+        return tuple(profile for profile in MyEmployeeProfile.EMPLOYEES.values() if profile.name == name)
+
     def __init__(self, kvp: KVP.KVP):
         """
         [Constructor] - Creates a new employee profile
