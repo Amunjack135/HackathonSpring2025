@@ -1,7 +1,11 @@
+from __future__ import annotations
+
 import CustomMethodsVI.Parser.KVP as KVP
 
 
 class MyEmployeeProfile:
+    EMPLOYEES: dict[str, MyEmployeeProfile] = {}
+
     def __init__(self, kvp: KVP.KVP):
         self.__employee_name__: str = kvp.EmployeeProfile.Name
         self.__skills__: list[str] = kvp.EmployeeProfile.Skills
