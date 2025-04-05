@@ -10,7 +10,27 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='icons/favicon.ico') }}">
     <title>Chevron HR Employee Database</title>
 </head>
-<body>
+    <body>
+        <div id="buffer-icon">
+            <img src="{{ url_for('static', filename='chevron-logo.svg') }}" alt="Chevron Logo" />
+            <p id="buffer-msg">Generating Questions...</p>
+        </div>
+        <div id="body-box">
+            <div id="header">
+                <nav id="navbar">
+                    <a href="https://www.chevron.com/chevron_old.html" class="main-navbar-link">Chevron Home</a>
+                </nav>
+                <div id="user-info">
+                    <input type="email" id="email-input" placeholder="Enter your email" required />
+                </div>
+            </div>
+            <div id="main-box">
 
-</body>
+            </div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="{{ url_for('static', filename='js/common.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+    </body>
 </html>

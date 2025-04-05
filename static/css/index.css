@@ -1,0 +1,221 @@
+body
+{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: "GothamBook", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+div#body-box
+{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+}
+
+div#buffer-icon
+{
+    display: none;
+    position: absolute;
+    height: 5vh;
+    width: 100%;
+    top: 35vh;
+    font-size: 3vw;
+    text-align: center;
+    z-index: 15;
+}
+
+div#buffer-icon img
+{
+    width: 10vw;
+    height: 10vw;
+}
+
+div#buffer-icon p
+{
+    height: 10vw;
+    font-weight: bold;
+}
+
+div#header
+{
+    background-color: #EDEDEE;
+    height: fit-content;
+    width: 100vw;
+    border-bottom: 0.75vh solid #009DD9;
+}
+
+nav#navbar
+{
+    background-color: #0B2D71;
+    width: 100vw;
+    height: 5vh;
+    top: 0;
+    left: 0;
+    box-shadow: 0 0 16px 8px #787878;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div#user-info
+{
+    width: 100vw;
+    height: 10vh;
+    top: 0;
+    left: 0;
+}
+
+div#main-box
+{
+    position: absolute;
+    width: 90vw;
+    height: 75vh;
+    top: 20vh;
+    left: 5vw;
+    border: 2px solid black;
+    overflow: hidden;
+}
+
+input#email-input
+{
+    width: 35%;
+    height: 5vh;
+    font-size: 2vh;
+    border: none;
+    left: 8vw;
+    top: 2vh;
+    position: relative;
+    background-color: transparent;
+    border-bottom: 0.25vh solid #787878;
+}
+
+div#form-inputs
+{
+    padding-left: 5vw;
+}
+
+div#form-inputs hr
+{
+    position: absolute;
+    width: 50%;
+    left: 2%;
+}
+
+div#form-inputs p
+{
+    font-size: 1.5vw;
+}
+
+div#discipline-input
+{
+    position: relative;
+    top: 2vh;
+    z-index: 2;
+}
+
+select#discipline
+{
+    background: transparent;
+    width: 35%;
+    font-size: 2.5vh;
+    border: none;
+    border-bottom: 0.25vw solid #009DD9;
+    position: relative;
+    bottom: 1vh;
+}
+
+table#college-class
+{
+    width: 30vw;
+    position: relative;
+    left: 5vw;
+    z-index: 2;
+}
+
+table#college-class td
+{
+    text-align: left;
+}
+
+table#college-class td input[type=radio]
+{
+    color: blue;
+}
+
+#preform
+{
+    display: block;
+}
+
+button#preform-submit
+{
+    position: absolute;
+    left: 20%;
+    bottom: 15%;
+    width: 15%;
+    height: 8%;
+    background-color: #0B2D71;
+    color: white;
+    font-family: "GothamBook", "Helvetica Neue", Helvetica, Arial, sans-serif;;
+    font-weight: 400;
+    border: none;
+    font-size: 1.5vw;
+    z-index: 5;
+}
+
+div#gen-info
+{
+    margin-left: 2vw;
+    width: 50%;
+    height: fit-content;
+    font-size: 2.5vh;
+    border-bottom: 2px solid black;
+}
+
+a.main-navbar-link
+{
+    color: white;
+    font-size: 2vh;
+    text-decoration: none;
+    width: fit-content;
+}
+
+a.main-navbar-link:hover
+{
+    text-decoration: underline;
+}
+
+button
+{
+    cursor: pointer;
+}
+
+button:hover
+{
+    background: #009DD9;
+}
+
+.hr
+{
+    width: 100%;
+    height: 1px;
+    background-color: black;
+}
+
+.rating-element
+{
+    position: relative;
+    left: -1vw;
+    width: 90%;
+    min-height: 3rem;
+    height: fit-content;
+    margin: 0.5vh 2.5vw 0.5vh 0;
+    border-top: 0.1vw solid black;
+    border-bottom: 0.1vw solid black;
+    padding: 1vh 1vw;
+}
