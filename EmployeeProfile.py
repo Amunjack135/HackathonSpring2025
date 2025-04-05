@@ -94,26 +94,31 @@ class MyEmployeeProfile:
         :param kvp: The employee profile's KVP information
         """
 
-        self.__file_offset__: str = file_offset
-        self.__employee_name__: str = kvp.EmployeeProfile.Name[0]
-        self.__skills__: list[str] = kvp.EmployeeProfile.Skills
+        self.__file_offset__: str = str(file_offset)
+        self.__employee_name__: str = str(kvp.EmployeeProfile.Name[0])
+        self.__skills__: list[str] = [str(x) for x in kvp.EmployeeProfile.Skills]
         self.__project_ids__: list[int] = [int(x) for x in kvp.EmployeeProfile.ProjectIDs]
         self.__performance_review_ids__: list[int] = [int(x) for x in kvp.EmployeeProfile.PerfReviewIDs]
         self.__assessment_ids: list[int] = [int(x) for x in kvp.EmployeeProfile.AssessmentIDs]
-        self.__roles__: list[str] = list(kvp.EmployeeProfile.CurrentRole)
+        self.__roles__: list[str] = [str(x) for x in kvp.EmployeeProfile.CurrentRole]
 
         if len(kvp.EmployeeProfile.ResumeID) == 3:
-            self.__resume_batch_id__: slice = slice(kvp.EmployeeProfile.ResumeID[0], kvp.EmployeeProfile.ResumeID[1])
-            self.__resume_file_id__: int = kvp.EmployeeProfile.ResumeID[2]
+            self.__resume_batch_id__: slice = slice(int(kvp.EmployeeProfile.ResumeID[0]), int(kvp.EmployeeProfile.ResumeID[1]))
+            self.__resume_file_id__: int = int(kvp.EmployeeProfile.ResumeID[2])
         else:
             self.__resume_batch_id__: slice = slice(-1, -1)
             self.__resume_file_id__: int = -1
 
         self.__image__: numpy.ndarray = numpy.full((512, 512, 4), 0, numpy.uint8) if len(kvp.EmployeeProfile.Image) == 0 else numpy.frombuffer(zlib.decompress(kvp.EmployeeProfile.Image[0]), dtype=numpy.uint8)
         self.__extra_meta__: typing.Any = None if len(kvp.EmployeeProfile.Extra) == 0 else pickle.loads(kvp.EmployeeProfile.Extra[0])
-        self.__bio__: str = '' if len(kvp.EmployeeProfile.Bio) == 0 else zlib.decompress(kvp.EmployeeProfile.Bio[0])
+        self.__bio__: str = '' if len(kvp.EmployeeProfile.Bio) == 0 else zlib.decompress(kvp.EmployeeProfile.Bio[0]).decode()
 
     def to_kvp(self) -> KVP.KVP:
+        """
+        Converts this object to KVP for saving
+        :return: A KVP object
+        """
+
         mapping: dict = {
             'EmployeeProfile': {
                 'Name': [self.__employee_name__],

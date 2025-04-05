@@ -87,14 +87,19 @@ class MyCompanyRole:
         :param kvp: The company role's KVP information
         """
 
-        self.__file_offset__: str = file_offset
-        self.__role_name__: str = kvp.CompanyRole.Name[0]
-        self.__role__: str = kvp.CompanyRole.Role[0]
-        self.__active__: bool = kvp.CompanyRole.IsActive[0]
-        self.__required_skills__: dict[str, float] = {skill: rank[0] for skill, rank in kvp.CompanyRole.RequiredSkills}
-        self.__optional_skills__: dict[str, float] = {skill: rank[0] for skill, rank in kvp.CompanyRole.OptionalSkills}
+        self.__file_offset__: str = str(file_offset)
+        self.__role_name__: str = str(kvp.CompanyRole.Name[0])
+        self.__role__: str = str(kvp.CompanyRole.Role[0])
+        self.__active__: bool = bool(kvp.CompanyRole.IsActive[0])
+        self.__required_skills__: dict[str, float] = {str(skill): float(rank[0]) for skill, rank in kvp.CompanyRole.RequiredSkills}
+        self.__optional_skills__: dict[str, float] = {str(skill): float(rank[0]) for skill, rank in kvp.CompanyRole.OptionalSkills}
 
     def to_kvp(self) -> KVP.KVP:
+        """
+        Converts this object to KVP for saving
+        :return: A KVP object
+        """
+
         mapping: dict = {
             'CompanyRole': {
                 'Name': [self.__role_name__],

@@ -6,6 +6,7 @@ import CustomMethodsVI.Connection as Connection
 
 import SocketHandler
 import EmployeeProfile
+import EmployeeAssessment
 import CompanyRole
 import Resume
 
@@ -13,6 +14,7 @@ app: flask.Flask = flask.Flask(__name__, static_folder='static', template_folder
 socketio: Connection.FlaskSocketioServer = Connection.FlaskSocketioServer(app)
 SocketHandler.init(socketio)
 EmployeeProfile.MyEmployeeProfile.load('data/employee_profiles')
+EmployeeAssessment.MyEmployeeAssessment.load('data/employee_assessments')
 CompanyRole.MyCompanyRole.load('data/company_roles')
 Resume.MyResume.load('data/resumes')
 
@@ -37,6 +39,7 @@ def socketio_main():
 def fallback_cleanup():
     CompanyRole.MyCompanyRole.save('data/company_roles')
     EmployeeProfile.MyEmployeeProfile.save('data/employee_profiles')
+    EmployeeAssessment.MyEmployeeAssessment.save('data/employee_assessments')
     Resume.MyResume.save('data/resumes')
     print('Server closed.')
 

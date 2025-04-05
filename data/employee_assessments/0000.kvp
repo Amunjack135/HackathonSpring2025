@@ -1,0 +1,8 @@
+>>EmployeeAssessment
+	EmployeeID=0&I
+	>>Categories
+		Cat1=0.9&F
+		Cat2=0.5&F
+		Cat3=1.0&F
+	<<
+<<
