@@ -1,6 +1,17 @@
+import json
 from openai import OpenAI
 
-client = OpenAI(api_key="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")
+
+with open('config.json') as f:
+    config = json.load(f)
+
+api_key = config.get("OPENAI_API_KEY")
+
+if not api_key:
+    raise ValueError("API key not found in config.json.")
+
+
+client = OpenAI(api_key=api_key)
 
 # import EmployeeProfile, CompanyRole
 # EmployeeProfile.MyEmployeeProfile.load('data/employee_profiles')
