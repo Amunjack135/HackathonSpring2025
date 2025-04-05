@@ -10,6 +10,7 @@ class MyCompanyRole:
     """
 
     COMPANY_ROLES: dict[int, MyCompanyRole] = {}
+    __LOADED__: bool = False
 
     @staticmethod
     def load(root_dir: str) -> int:
@@ -18,6 +19,9 @@ class MyCompanyRole:
         :param root_dir: The directory to load from
         :return: The number of loaded company roles
         """
+
+        if MyCompanyRole.__LOADED__:
+            return 0
 
         dirs: list[FileSystem.Directory] = [FileSystem.Directory(root_dir)]
 
@@ -37,6 +41,7 @@ class MyCompanyRole:
                     index: int = int(file.filename())
                     MyCompanyRole.COMPANY_ROLES[index] = MyCompanyRole(KVP.KVP.decode(fstream.read()))
 
+        MyCompanyRole.__LOADED__ = True
         return len(MyCompanyRole.COMPANY_ROLES)
 
     def __init__(self, kvp: KVP.KVP):
@@ -52,14 +57,14 @@ class MyCompanyRole:
         self.__optional_skills__: dict[str, float] = {skill: rank[0] for skill, rank in kvp.CompanyRole.OptionalSkills}
 
     @staticmethod
-    def get_uuids_from_role_name(role: str) -> tuple[int, ...]:
+    def get_uuids_from_role_name(role_name: str) -> tuple[int, ...]:
         """
         Gets all role uids for a given role name
-        :param role: The role to check
+        :param role_name: The role to check
         :return: The role uids matching this role
         """
 
-        return tuple(uid for uid, role in MyCompanyRole.COMPANY_ROLES.items() if role.role == role)
+        return tuple(uid for uid, role in MyCompanyRole.COMPANY_ROLES.items() if role.role.lower() == role_name.lower())
 
     @property
     def role_name(self) -> str:
@@ -108,7 +113,7 @@ class MyCompanyRole:
         :return: This employee's name
         """
 
-        return {a: b for a, b in self.__required_skills__}
+        return {a: b for a, b in self.__required_skills__.items()}
 
     @property
     def optional_skills(self) -> dict[str, float]:
@@ -117,4 +122,4 @@ class MyCompanyRole:
         :return: This employee's name
         """
 
-        return {a: b for a, b in self.__optional_skills__}
+        return {a: b for a, b in self.__optional_skills__.items()}

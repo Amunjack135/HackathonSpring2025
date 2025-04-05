@@ -22,6 +22,7 @@ if not api_key:
 
 EmployeeProfile.MyEmployeeProfile.load('data/employee_profiles')
 CompanyRole.MyCompanyRole.load('data/company_roles')
+Resume.MyResume.load('data/resumes')
 
 client = OpenAI(api_key=api_key)
 
@@ -124,9 +125,22 @@ def partial_match_score(skill_1, skill_2):
 
 
 def match_employee_to_role(employee: EmployeeProfile.MyEmployeeProfile, company_roles: dict[int, CompanyRole.MyCompanyRole]):
-    role_scores = {}
-    active_roles: set[str] = set(role.role_name for role in company_roles.values())     # Get all active roles as loaded from file
-    extra_skills: dict[str, dict[str, float]] = company_skills(active_roles)            # Get ChatGPT estimated AI skills
+    role_scores: dict[int, float] = {}
+    active_roles: set[str] = set(role.role_name for role in company_roles.values())             # Get all active roles as loaded from file
+    extra_skills_input: list[dict[str, typing.Any]] = company_skills(active_roles)              # Get ChatGPT estimated AI skills
+    extra_skills: dict[int, dict[str, float]] = {}                                              # Convert AI skills to format usable by CompanyRole.py
+
+    for info in extra_skills_input:
+        role_name: str = info['role']
+        uids: tuple[int, ...] = CompanyRole.MyCompanyRole.get_uuids_from_role_name(role_name.replace(' ', ''))
+
+        if len(uids) == 0:
+            continue
+
+        for uid in uids:
+            extra_skills[uid] = info['skills']
+
+    print(extra_skills)
 
     # Normalize employee skills
     normalized_employee_skills = [skill.strip().lower() for skill in employee.skills]
@@ -137,7 +151,7 @@ def match_employee_to_role(employee: EmployeeProfile.MyEmployeeProfile, company_
         # Normalize role skills and apply weights
         normalized_role_required_skills = {k.strip().lower(): v for k, v in role.required_skills.items()}       # Get required skills as listed in company role files
         normalized_role_optional_skills = {k.strip().lower(): v for k, v in role.optional_skills.items()}       # Get optional skills as listed in company role files
-        normalized_role_extra_skills = {k.strip().lower(): v for k, v in extra_skills[role.role_name].items()}  # Get extra skills as listed from AI
+        normalized_role_extra_skills = {k.strip().lower(): v for k, v in extra_skills[uid].items()}  # Get extra skills as listed from AI
 
         for skill in normalized_role_required_skills:
             matched_score = 0
@@ -159,8 +173,8 @@ def match_employee_to_role(employee: EmployeeProfile.MyEmployeeProfile, company_
         role_scores[uid] = score
 
     # Sort roles by score in descending order
-    top_matches = sorted(role_scores.items(), key=lambda x: x[1], reverse=True)
-    return top_matches
+    top_matches: list[tuple[int, float]] = sorted(role_scores.items(), key=lambda x: x[1], reverse=True)
+    return {pair[0]: pair[1] for pair in top_matches}
 
 
 profile: EmployeeProfile.MyEmployeeProfile = EmployeeProfile.MyEmployeeProfile.get_employees_by_name('Amun Jackson')[0]     # Load profile

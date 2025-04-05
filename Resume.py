@@ -14,6 +14,7 @@ class MyResume:
 
     RESUMES: dict[slice, dict[int, MyResume]] = {}
     BATCH_FILES: dict[slice, FileSystem.File] = {}
+    __LOADED__: bool = False
 
     @staticmethod
     def load(root_dir: str) -> int:
@@ -23,6 +24,9 @@ class MyResume:
         :param root_dir: The directory to load from
         :return: The number of loaded resumes
         """
+
+        if MyResume.__LOADED__:
+            return 0
 
         root_dir: FileSystem.Directory = FileSystem.Directory(root_dir)
         dirs: list[FileSystem.Directory] = [root_dir]
@@ -52,6 +56,7 @@ class MyResume:
                     MyResume.RESUMES[batch] = batch_listing
                     MyResume.BATCH_FILES[batch] = FileSystem.File(fname)
 
+        MyResume.__LOADED__ = True
         return len(MyResume.RESUMES)
 
     @staticmethod

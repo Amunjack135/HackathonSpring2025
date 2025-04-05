@@ -16,6 +16,7 @@ class MyEmployeeProfile:
     """
 
     EMPLOYEES: dict[int, MyEmployeeProfile] = {}
+    __LOADED__: bool = False
 
     @staticmethod
     def load(root_dir: str) -> int:
@@ -24,6 +25,9 @@ class MyEmployeeProfile:
         :param root_dir: The directory to load from
         :return: The number of loaded employee profiles
         """
+
+        if MyEmployeeProfile.__LOADED__:
+            return 0
 
         dirs: list[FileSystem.Directory] = [FileSystem.Directory(root_dir)]
 
@@ -43,6 +47,7 @@ class MyEmployeeProfile:
                     index: int = int(file.filename())
                     MyEmployeeProfile.EMPLOYEES[index] = MyEmployeeProfile(KVP.KVP.decode(fstream.read()))
 
+        MyEmployeeProfile.__LOADED__ = True
         return len(MyEmployeeProfile.EMPLOYEES)
 
     @staticmethod
