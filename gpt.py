@@ -1,21 +1,22 @@
 import json
 from openai import OpenAI
-
+from EmployeeProfile import MyEmployeeProfile
+from CompanyRole import MyCompanyRole
 
 with open('config.json') as f:
     config = json.load(f)
 
-api_key = config.get("OPENAI_API_KEYS")
+api_key = config.get("OPENAI_API_KEY")
 
 if not api_key:
     raise ValueError("API key not found in config.json.")
 
 
+MyEmployeeProfile.load('data/employee_profiles')
+MyCompanyRole.load('data/company_roles')
+
 client = OpenAI(api_key=api_key)
 
-# import EmployeeProfile, CompanyRole
-# EmployeeProfile.MyEmployeeProfile.load('data/employee_profiles')
-# CompanyRole.MyCompanyRole.load('data/company_roles')
 
 
 def skills(text):
@@ -26,7 +27,7 @@ def skills(text):
         You are building an AI-powered system for Chevron to assess employee capabilities and match them to the most suitable internal roles.
 
         The system will:
-        - Analyze employee data such as performance reviews, project outcomes, self-assessments, and peer feedback.
+        - Analyzåe employee data such as performance reviews, project outcomes, self-assessments, and peer feedback.
         - Extract relevant technical and soft skills.
         - Compare these skills with Chevron's available roles to determine the best match.
 
