@@ -11,10 +11,20 @@ import Resume
 
 
 class MyEmployeeProfile:
+    """
+    Basic class holding employee profile information
+    """
+
     EMPLOYEES: dict[int, MyEmployeeProfile] = {}
 
     @staticmethod
     def load(root_dir: str) -> int:
+        """
+        Loads all employee profiles in the specified directory
+        :param root_dir: The directory to load from
+        :return: The number of loaded employee profiles
+        """
+
         dirs: list[FileSystem.Directory] = [FileSystem.Directory(root_dir)]
 
         while len(dirs) > 0:
@@ -36,6 +46,12 @@ class MyEmployeeProfile:
         return len(MyEmployeeProfile.EMPLOYEES)
 
     def __init__(self, kvp: KVP.KVP):
+        """
+        [Constructor] - Creates a new employee profile
+        This will not add it to the internal listing and should not be called explicitly
+        :param kvp: The employee profile's KVP information
+        """
+
         self.__employee_name__: str = kvp.EmployeeProfile.Name[0]
         self.__skills__: list[str] = kvp.EmployeeProfile.Skills
         self.__project_ids__: list[int] = [int(x) for x in kvp.EmployeeProfile.ProjectIDs]
@@ -56,17 +72,38 @@ class MyEmployeeProfile:
 
     @property
     def name(self) -> str:
+        """
+        Gets this employee's name
+        :return: This employee's name
+        """
+
         return self.__employee_name__
 
     @name.setter
     def name(self, name: str) -> None:
+        """
+        Sets this employee's name
+        :param name: The new name, must be a string at least 2 characters long
+        :return: NONE
+        """
+
         assert isinstance(name, str) and len(name) >= 2, 'Invalid name'
         self.__employee_name__ = name
 
     @property
     def skills(self) -> tuple[str, ...]:
+        """
+        Gets this employee's skills
+        :return: This employee's skills
+        """
+
         return tuple(self.__skills__)
 
     @property
     def resume(self) -> Resume.MyResume | None:
+        """
+        Gets this employee's resume
+        :return: This employee's resume or None
+        """
+
         return Resume.MyResume.get_resume(self.__resume_batch_id__, self.__resume_file_id__)

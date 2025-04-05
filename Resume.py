@@ -8,11 +8,22 @@ import CustomMethodsVI.FileSystem as FileSystem
 
 
 class MyResume:
+    """
+    Basic class holding resume information
+    """
+
     RESUMES: dict[slice, dict[int, MyResume]] = {}
     BATCH_FILES: dict[slice, FileSystem.File] = {}
 
     @staticmethod
     def load(root_dir: str) -> int:
+        """
+        Loads all resumes in the specified directory
+        Resumes are held in batches and loaded as such
+        :param root_dir: The directory to load from
+        :return: The number of loaded resumes
+        """
+
         root_dir: FileSystem.Directory = FileSystem.Directory(root_dir)
         dirs: list[FileSystem.Directory] = [root_dir]
 
@@ -45,6 +56,13 @@ class MyResume:
 
     @staticmethod
     def save(root_dir: str) -> None:
+        """
+        Saves all resumes to the specified directory
+        Resumes are held in batches and saved as such
+        :param root_dir: The directory to save to
+        :return: NONE
+        """
+
         root_dir: FileSystem.Directory = FileSystem.Directory(root_dir)
 
         if not root_dir.exists():
@@ -73,11 +91,28 @@ class MyResume:
 
     @staticmethod
     def get_resume(batch: slice, index: int) -> MyResume | None:
+        """
+        Gets a single resume from the internal listing
+        :param batch: The batch slice to retrieve from. This value is a slice in the form (start, stop, None)
+        :param index: The index in the batch to retrieve
+        :return: The specified resume or None if it could not be found
+        """
+
         return MyResume.RESUMES[batch][index] if batch in MyResume.RESUMES and index in MyResume.RESUMES[batch] else None
 
     def __init__(self, resume: str):
+        """
+        [Constructor] - Creates a new resume
+        This will not add it to the internal listing and should not be called explicitly
+        :param resume: The resume's contents
+        """
+
         self.__resume__: resume = str(resume)
 
     @property
     def contents(self) -> str:
+        """
+        :return: The contents of this resume
+        """
+
         return self.__resume__
